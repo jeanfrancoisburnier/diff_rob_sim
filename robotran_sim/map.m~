@@ -1,0 +1,32 @@
+classdef map
+    
+    % Private variables
+    properties(Access = private)
+        central_obstacle_;
+        blue_goal_obstacle_;
+        yellow_goal_obstacle_;
+    end
+    
+    % Public variables
+    properties
+    end
+    
+    % Methods implementation
+    methods
+        function obj = map()
+            obstacles = load('obstacles');
+            obj.central_obstacle_ = polygon(obstacles.central_obstacle);
+            obj.blue_goal_obstacle_ = polygon(obstacles.blue_goal_obstacle);
+            obj.yellow_goal_obstacle_ = polygon(obstacles.yellow_goal_obstacle);
+        end
+        
+        function drawMap(obj)
+            hold on;
+            obj.central_obstacle_.drawPolygon();
+            obj.blue.drawPolygon();
+            obj.central_obstacle_.drawPolygon();
+            hold off;
+        end
+        
+    end
+end

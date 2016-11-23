@@ -31,15 +31,21 @@ classdef circle
             end
         end
         
-        function drawCircle(obj)
+        function drawCircle(obj,colour, width)
             if ~ishold
                 hold on;
                 holding = false;
             else
                 holding = true;
             end
-            plot(obj.pts_(1,:),obj.pts_(2,:));
-            
+            if nargin == 1
+                plot(obj.pts_(1,:),obj.pts_(2,:));
+            elseif nargin == 2
+                plot(obj.pts_(1,:),obj.pts_(2,:),colour);
+            else
+                plot(obj.pts_(1,:),obj.pts_(2,:),colour,...
+                     'LineWidth',width);
+            end
             if ~holding
                 hold off;
             end

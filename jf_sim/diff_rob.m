@@ -10,7 +10,7 @@ classdef diff_rob
         vx_;
         vy_;
         current_target_;
-        rob_circle_;
+        rob_shape_;
     end
     
     % Public variables
@@ -43,7 +43,7 @@ classdef diff_rob
             obj.vy_ = 0;
             obj.rob_sim_ = rob_sim1;
             obj.current_target_ = 1;
-            obj.rob_circle_ = circle(0.13,[x(1),y(1)]);
+            obj.rob_shape_ = robot_shape([obj.x_(1),obj.y_(1)],obj.theta_(1));
         end
         
         function obj = compute_new_speed(obj)
@@ -126,8 +126,7 @@ classdef diff_rob
         
             obj.theta_(k+1) =  limitAngle(obj.r_w_/obj.b_*(obj.r_w_speed_-obj.l_w_speed_)*dt+obj.theta_(k)) + 0.007*(rand()-0.5);
             
-            obj.rob_circle_ = circle(0.13,[obj.x_(k+1),obj.y_(k+1)]);
-            
+            obj.rob_shape_ = obj.rob_shape_.update([obj.x_(k+1),obj.y_(k+1)],obj.theta_(k+1));
             obj = obj.CheckReachedTarget();
             
             obj.rob_sim_ = obj.rob_sim_.update();
@@ -148,7 +147,7 @@ classdef diff_rob
             plot(obj.x_(1),obj.y_(1),'*','MarkerSize',12,'LineWidth',1);
             
             % Plot robots current position
-            obj.rob_circle_.drawCircle();
+            obj.rob_shape_.drawRobot();
             %plot(obj.x_(k),obj.y_(k),'o','MarkerSize',12,'LineWidth',3);
             
             % Plots robots directions
